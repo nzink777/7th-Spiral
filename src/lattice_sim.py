@@ -76,3 +76,35 @@ if __name__ == "__main__":
     print(f"Energy Extraction Potential (Imag): {modes[max_gain_idx].imag:.4f}")
     print(f"Non-Hermitian check (Sum abs diff): {np.sum(np.abs(sim.H - sim.H.conj().T)):.4f}")
     
+#
+
+import yaml
+
+def calibrate_ep(self):
+    """
+    Sweeps gamma0 to find the Exceptional Point and writes to constants.yaml.
+    """
+    gamma_range = np.linspace(0.1, 2.0, 500)
+    min_diff = float('inf')
+    optimal_gamma = 0
+    
+    for g in gamma_range:
+        self.build_hamiltonian(T0=1.0, gamma0=g, localization_xi=0.1)
+        evals = np.linalg.eigvals(self.H)
+        
+        # Sort eigenvalues by real part
+        evals = evals[np.argsort(evals.real)]
+        
+        # Find the gap between the two closest modes
+        gap = np.abs(evals[1] - evals[0])
+        
+        if gap < min_diff:
+            min_diff = gap
+            optimal_gamma = g
+            
+    # Lock the value
+    with open("constants.yaml", "w") as f:
+        yaml.dump({"Axiomatic_Constant_Gamma0": float(optimal_gamma)}, f)
+    
+    print(f"Locked Gamma0 at: {optimal_gamma}")
+    
