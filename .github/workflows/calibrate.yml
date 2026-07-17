@@ -1,0 +1,34 @@
+name: Lattice Calibration Sweep
+
+on:
+  push:
+    paths:
+      - 'src/lattice_sim.py'
+      - '.github/workflows/calibrate.yml'
+
+jobs:
+  calibrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: pip install numpy pyyaml
+        
+      - name: Run Eigenspectrum Sweep
+        run: |
+          python -c "from src.lattice_sim import LatticeSim; sim = LatticeSim(); sim.calibrate_ep()"
+          
+      - name: Commit Axiomatic Constant
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add constants.yaml
+          git commit -m "chore: Update Axiomatic Constant Gamma0" || echo "No changes to commit"
+          git push
+          
