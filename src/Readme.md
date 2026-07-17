@@ -21,4 +21,53 @@ If \Gamma_n < 0, the mode is a "loss mode"—it dissipates energy.
 The simulation must identify the modes where \Gamma_n is maximized.
 src/lattice_sim.py
 Call class LatticeSim:
- calculate these eigenvalues
+ calculate these eigenvalues.
+
+
+This documentation provides the technical scaffolding for the lattice_sim.py module. 
+Consolidated the logic of the 64-sector Hilbert space, the construction of the Hamiltonian, and the eigenvalue analysis required to identify potential energy extraction modes.
+src/lattice_sim.py : Computational Engine
+Overview
+This module serves as the primary computational engine for the 7th Spiral project. It implements the non-Hermitian Hamiltonian construction necessary to model the vacuum flux within a 64-sector Cornucopia resonator array.
+By breaking time-reversal symmetry through an asymmetric coupling matrix, this simulation maps the conditions under which the vacuum fluctuations transition into coherent, work-producing states.
+Mathematical Architecture
+1. Lattice Geometry
+The engine operates within a 64-dimensional Hilbert space \mathcal{H}_{64}. The physical arrangement follows a logarithmic spiral discretization to ensure uniform flux density:
+ * Radial Mapping: r_n = A \sqrt{\frac{n}{64}}
+ * Angular Distribution: \theta_n = \phi \cdot n, where \phi \approx 137.5^\circ (Golden Angle).
+2. The Non-Hermitian Hamiltonian
+The system is governed by the Hamiltonian H = T + i\Gamma, where the asymmetry drives the chiral current:
+ * Reciprocal Hopping (T_{nm}): T_{nm} = T_0 \exp(-dist / \xi). This represents the standard photonic tunneling between sectors.
+ * Non-Reciprocal Bias (\Gamma_{nm}): Defined by \gamma_0 (\delta_{n, m+1} - \delta_{n, m-1}). This anti-Hermitian component forces the flux into a directional, chiral flow.
+Eigenspectrum Analysis
+The key to identifying "free work" lies in the complex eigenvalues (\lambda_n) of the Hamiltonian. When the system is non-Hermitian (H \neq H^\dagger), the eigenvalues are defined as:
+ * Real Part (E_n): Represents the discrete resonant frequency of the sector mode.
+ * Imaginary Part (\Gamma_n): Represents the mode's gain or loss.
+   * \Gamma_n > 0 (Gain Mode): The system extracts energy from the vacuum reservoir.
+   * \Gamma_n < 0 (Loss Mode): The system dissipates energy.
+The simulation specifically isolates the mode with the maximum \Gamma_n to determine the optimal operational frequency of the Cornucopia resonator.
+Usage
+The LatticeSim class handles initialization, Hamiltonian construction, and mode solving.
+from lattice_sim import LatticeSim
+
+# 1. Initialize the 64-sector simulation
+sim = LatticeSim(num_sectors=64)
+
+# 2. Build the non-Hermitian Hamiltonian
+# T0: Hopping strength, gamma0: Chiral bias, localization_xi: coupling range
+sim.build_hamiltonian(T0=1.0, gamma0=0.5, localization_xi=0.1)
+
+# 3. Solve for stable modes
+modes = sim.solve_modes()
+
+# 4. Identify the primary gain mode (Energy Extraction Potential)
+max_gain_idx = np.argmax(modes.imag)
+print(f"Primary Resonance Mode: {modes[max_gain_idx].real}")
+print(f"Extraction Potential (Gain): {modes[max_gain_idx].imag}")
+
+Verification
+To ensure the mathematical validity of the chiral bias, the simulation performs a non-reciprocity check:
+
+
+A non-zero result confirms that time-reversal symmetry is broken, validating the system's capacity for energy extraction.
+
