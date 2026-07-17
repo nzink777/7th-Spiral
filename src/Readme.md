@@ -68,6 +68,10 @@ print(f"Extraction Potential (Gain): {modes[max_gain_idx].imag}")
 Verification
 To ensure the mathematical validity of the chiral bias, the simulation performs a non-reciprocity check:
 
-
 A non-zero result confirms that time-reversal symmetry is broken, validating the system's capacity for energy extraction.
 
+Eigenspectrum Sweep: Identifying Exceptional Points
+An Exceptional Point occurs when two eigenvalues coalesce. In our Hamiltonian \mathbf{H} = \mathbf{T} + i\mathbf{\Gamma}, the parameter \gamma_0 (the non-reciprocal bias) tunes the system toward these EPs.
+def 
+find_exceptional_points(self, gamma_range=np.linspace(0, 2.0, 100)):
+    """
