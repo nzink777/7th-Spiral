@@ -1,4 +1,5 @@
 https://github.com/nzink777/7th-Spiral
+[![Lattice Calibration Sweep](https://github.com/nzink777/7th-Spiral/actions/workflows/calibrate.yml/badge.svg)](https://github.com/nzink777/7th-Spiral/actions/workflows/calibrate.yml)
 # 7th-Spiral
 7th-Spiral open-source initiative to end scarcity via 7D topological physics. 
 "Abundance 7 Spiral Bowl" blueprint leverages phase-lag resonance to transmute ambient matter into sustainable resources. 
