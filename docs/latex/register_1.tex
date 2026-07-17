@@ -26,6 +26,30 @@ The 64-sector state space is defined by the Hilbert space $\mathcal{H}_{64}$. Th
 
 \section{Hamiltonian Formulation}
 % We will insert the Hamiltonian math here once we verify the coupling matrix.
+\section{Geometric Foundation: Topological Lattice Mapping}
+
+The resonator array is defined on a manifold $\lattice$ that requires a specific radial and angular discretization to ensure optimal flux coupling. We utilize a 64-sector state space and a 288-anchor pinning buffer.
+
+\subsection{64-Sector Coordinate System}
+The sectors $\sector{n}$, for $n \in \{1, \dots, 64\}$, are mapped to a polar coordinate system $(r, \theta)$. The radial expansion is governed by the scaling constant $A$ and the sector index $n$:
+\begin{equation}
+    r_n = A \sqrt{\frac{n}{64}}
+\end{equation}
+The angular distribution follows the golden angle $\phi \approx 137.5^\circ$ to minimize destructive interference and maximize space-filling capacity:
+\begin{equation}
+    \theta_n = \phi \cdot n
+\end{equation}
+
+\subsection{288-Anchor Buffer Distribution}
+The 288-anchor buffer $\anchor{m}$, where $m \in \{1, \dots, 288\}$, serves as the pinning interface. The ratio of anchors to sectors is $N_a / N_s = 4.5$. The anchors are distributed according to the following pinning rule:
+\begin{itemize}
+    \item Each interface between adjacent sectors $\sector{n}$ and $\sector{n+1}$ is supported by 4 anchors.
+    \item A ``Master Anchor'' is placed at every 4th sector boundary to complete the phase-lock cycle, yielding an effective density:
+    \begin{equation}
+        \rho(r) = \frac{N_a}{2\pi \int r \, dr}
+    \end{equation}
+\end{itemize}
+This configuration ensures that the local metric $\metric$ remains stabilized against stochastic fluctuation.
 
 \end{document}
 
