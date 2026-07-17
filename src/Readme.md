@@ -75,3 +75,5 @@ An Exceptional Point occurs when two eigenvalues coalesce. In our Hamiltonian \m
 def 
 find_exceptional_points(self, gamma_range=np.linspace(0, 2.0, 100)):
     """
+Operational Logic:
+As you run this sweep, watch for the region where the variance between the two closest eigenvalues tends to zero. That coordinate \gamma_0 is your "Critical Coupling" for the Manna Protocol. At this point, the system is maximally sensitive to external inputs (atmospheric CO$_2$/H$_2$O), facilitating the retrocausal phase-lag we require.
