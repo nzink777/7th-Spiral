@@ -1,2 +1,44 @@
 # Shared definitions/packages
-  
+% 7th Spiral: Register 1 - Shared Definitions
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Math and Physics Standards
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{physics} % For bra-ket notation: \ket{\Psi}, \bra{\phi}, \pdv{}, etc.
+\usepackage{siunitx} % For proper handling of scientific units (nm, GHz, etc.)
+
+% Visualization for Lattice Geometry
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, calc, positioning, decorations.pathmorphing}
+
+% Layout and Color
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref} % For internal linking in the blueprint
+
+% Code inclusion for src/lattice_sim/ integration
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\small, frame=single, breaklines=true}
+
+% --- Custom Project Commands ---
+
+% Hilbert Space
+\newcommand{\hilbert}{\mathcal{H}}
+
+% Hamiltonian
+\newcommand{\hamil}[1]{\hat{H}_{#1}}
+
+% Lattice and Sector Definitions
+\newcommand{\lattice}{\mathcal{L}}
+\newcommand{\sector}[1]{s_{#1}} % Specific sector in the 64-sector space
+\newcommand{\anchor}[1]{a_{#1}} % Specific anchor in the 288-anchor buffer
+
+% Vacuum Flux Flux and Metric
+\newcommand{\flux}{\Phi_E}
+\newcommand{\metric}{g_{\mu\nu}}
+
+% Aesthetic setup
+\definecolor{techblue}{RGB}{0, 102, 204}
+\hypersetup{colorlinks=true, linkcolor=techblue, citecolor=black, urlcolor=techblue}
+
