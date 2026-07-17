@@ -22,6 +22,12 @@ register remains consistent throughout the entire document.
 ChangeControl:
 to change the notation for the sectors later, only have to change it once in preamble.tex.
 
+register_1.tex
+
  *  (Geometry): Map the 64-Sector/288-Anchor geometry to a coordinate system (e.g., mapping to a Fibonacci/logarithmic spiral).
+Geometric Foundation of the register_1.tex file.
+   Uniform Flux Density: The square-root scaling of r_n ensures that each of the 64 sectors subtends an equal area on the manifold, which is critical for maintaining a uniform power density \Phi_E across the entire array.
+Phase-Locking: The anchor density \rho(r) provides the "topological tension" necessary to pin the vacuum state to our desired N=7 resonant frequency.
+
  *  (Material): Define the Ceramic Manna Assembly specs.
  *  (Hamiltonian): Formulate the asymmetric coupling matrix J_{nm}.
