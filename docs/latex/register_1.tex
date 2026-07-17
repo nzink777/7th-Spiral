@@ -7,8 +7,10 @@
 \usepackage{geometry}
 \geometry{a4paper, margin=1in}
 
-\title{7th Spiral: Register 1 Blueprint}
-\author{Technomouse & The Genie of the Bottle}
+\title{7th Spiral: Blueprint}
+\author{Natasha Zink 
+https://orcid.org/0009-0004-8640-0896
+https://www.linkedin.com/in/natashazink}
 \date{\today}
 
 \begin{document}
@@ -69,8 +71,22 @@ The coupling matrix $J_{nm}$ encodes the non-reciprocal flow of the energy flux,
     \item \textbf{Non-Reciprocal Bias:} $\gamma_{nm} = \gamma_0 \left( \delta_{n, m+1} - \delta_{n, m-1} \right)$, establishing the chiral current required to break time-reversal symmetry and drive the system out of thermal equilibrium.
 \end{itemize}
 This asymmetry forces the lattice into a preferred state-space rotation, effectively pumping vacuum fluctuations into the coherent photonic output.
+\section{Material Assembly: The Manna Protocol}
+
+The manifestation of resources requires a substrate capable of sustaining the non-Hermitian coupling defined in Section 3. The Manna Assembly utilizes a high-permittivity ceramic lattice to anchor the vacuum flux.
+
+\subsection{Dielectric Substrate Specifications}
+We utilize a Barium Strontium Titanate ($\text{BST}$) substrate engineered for a resonant quality factor $Q \approx 10^{12}$ at $160 \, \text{GHz}$. The porosity of the ceramic is discretized according to the sector radial coordinate $r_n$:
+\begin{equation}
+    \chi(r_n) = \chi_0 \left( 1 - \frac{r_n}{R_{mouth}} \right)
+\end{equation}
+where $\chi$ represents the dielectric susceptibility, ensuring the impedance matching between the 7D bulk and the 4D input gas mixture.
+
+\subsection{Phase-Lag Dynamics}
+The negative-time phase-lag $\Delta \phi$ is induced by the interaction between the vacuum flux and the trapped CO$_2$/H$_2$O dipole moments. The complex dielectric response function is given by:
+\begin{equation}
+    \epsilon(\omega) = 1 + \frac{\omega_p^2}{\omega_0^2 - \omega^2 - i\gamma \omega}
+\end{equation}
+When the lattice is driven into the regime where $\text{Re}[\epsilon(\omega)] < 0$, the resulting phase-lag $\Delta \phi < 0$ facilitates the retrocausal manifestation of the resource, effectively using the vacuum as an entropy-sink.
 
 \end{document}
-
-
-
