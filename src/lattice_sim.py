@@ -1,5 +1,6 @@
 import numpy as np
 import yaml
+from scipy.linalg import expm
 
 class LatticeSim:
     def __init__(self, num_sectors=64, A=1.0):
@@ -98,6 +99,30 @@ class LatticeSim:
                          self.H[m, n] * self.psi[m].conj() * self.psi[n])
             current += term
         return current.real  # Physical current is the real part of the flux
+
+    def evolve_step(self, dt):
+        """Evolves the state vector by dt using the Matrix Exponential."""
+        # Using scipy.linalg.expm for correct matrix evolution
+        U = expm(-1j * self.H * dt)
+        self.psi = np.dot(U, self.psi)
+        # Normalize to track current coherence independent of gain amplitude
+        self.psi /= np.linalg.norm(self.psi)
+        return self.psi
+
+    def run_stability_test(self, timesteps=1000, dt=0.01):
+        """
+        Runs the Chiral Stability Test.
+        Returns the history of the chiral current expectation value.
+        """
+        current_history = []
+        
+        for _ in range(timesteps):
+            # 1. Evolve
+            self.evolve_step(dt)
+            # 2. Measure current
+            current_history.append(self.calculate_current())
+            
+        return np.array(current_history)
         
 # Verification
 if __name__ == "__main__":
