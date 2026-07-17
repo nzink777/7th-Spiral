@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
+import yaml
 
 class LatticeSim:
     def __init__(self, num_sectors=64, A=1.0):
@@ -77,34 +77,31 @@ if __name__ == "__main__":
     print(f"Non-Hermitian check (Sum abs diff): {np.sum(np.abs(sim.H - sim.H.conj().T)):.4f}")
     
 #
-
-import yaml
-
-def calibrate_ep(self):
-    """
-    Sweeps gamma0 to find the Exceptional Point and writes to constants.yaml.
-    """
-    gamma_range = np.linspace(0.1, 2.0, 500)
-    min_diff = float('inf')
-    optimal_gamma = 0
-    
-    for g in gamma_range:
-        self.build_hamiltonian(T0=1.0, gamma0=g, localization_xi=0.1)
-        evals = np.linalg.eigvals(self.H)
+    def calibrate_ep(self):
+        """
+        Sweeps gamma0 to find the Exceptional Point and writes to constants.yaml.
+        Logic: Minimizes the distance between the two eigenvalues with the largest real parts.
+        """
+        gamma_range = np.linspace(0.1, 2.0, 500)
+        min_diff = float('inf')
+        optimal_gamma = 0
         
-        # Sort eigenvalues by real part
-        evals = evals[np.argsort(evals.real)]
-        
-        # Find the gap between the two closest modes
-        gap = np.abs(evals[1] - evals[0])
-        
-        if gap < min_diff:
-            min_diff = gap
-            optimal_gamma = g
+        for g in gamma_range:
+            self.build_hamiltonian(T0=1.0, gamma0=g, localization_xi=0.1)
+            evals = np.linalg.eigvals(self.H)
             
-    # Lock the value
-    with open("constants.yaml", "w") as f:
-        yaml.dump({"Axiomatic_Constant_Gamma0": float(optimal_gamma)}, f)
-    
-    print(f"Locked Gamma0 at: {optimal_gamma}")
-    
+            # Sort by real part to track the two primary resonant modes
+            evals = evals[np.argsort(evals.real)]
+            
+            # Identify the gap between the two modes closest to coalescence
+            gap = np.abs(evals[1] - evals[0])
+            
+            if gap < min_diff:
+                min_diff = gap
+                optimal_gamma = g
+                
+        # Lock the value
+        with open("constants.yaml", "w") as f:
+            yaml.dump({"Axiomatic_Constant_Gamma0": float(optimal_gamma)}, f)
+        
+        print(f"Locked Gamma0 at: {optimal_gamma}")
