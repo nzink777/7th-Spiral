@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 class LatticeSim:
     def __init__(self, num_sectors=64, A=1.0):
@@ -41,6 +42,27 @@ class LatticeSim:
         evolution_op = np.linalg.matrix_power(np.exp(-1j * self.H * dt), 1)
         self.psi = np.dot(evolution_op, self.psi)
         return self.psi
+
+def find_exceptional_points(self, gamma_range=np.linspace(0, 2.0, 100)):
+    """
+    Sweeps gamma_0 to locate Exceptional Points (EPs).
+    EPs occur where eigenvalues coalesce.
+    """
+    eigenvalue_history = []
+    
+    for g in gamma_range:
+        # Rebuild Hamiltonian with varying gamma0
+        self.build_hamiltonian(T0=1.0, gamma0=g, localization_xi=0.1)
+        eigenvalues = np.linalg.eigvals(self.H)
+        eigenvalue_history.append(eigenvalues)
+    
+    # Analyze coalescence
+    history = np.array(eigenvalue_history)
+    return gamma_range, history
+
+# Integration: Plotting the spectrum
+# We look for the "branching" or "merging" points in the complex plane.
+
 
 # Verification
 if __name__ == "__main__":
