@@ -84,7 +84,21 @@ class LatticeSim:
             yaml.dump({"Axiomatic_Constant_Gamma0": float(optimal_gamma)}, f)
         
         print(f"Locked Gamma0 at: {optimal_gamma}")
-
+        
+    def calculate_current(self):
+        """
+        Calculates the expectation value of the Chiral Current Operator J.
+        J_n,n+1 = i * (H_n,n+1 * psi_n.conj * psi_n+1 - H_n+1,n * psi_n+1.conj * psi_n)
+        """
+        current = 0j
+        for n in range(self.N - 1):
+            m = n + 1
+            # Expectation value contribution: i * (H_nm * psi_n* * psi_m - H_mn * psi_m* * psi_n)
+            term = 1j * (self.H[n, m] * self.psi[n].conj() * self.psi[m] - 
+                         self.H[m, n] * self.psi[m].conj() * self.psi[n])
+            current += term
+        return current.real  # Physical current is the real part of the flux
+        
 # Verification
 if __name__ == "__main__":
     sim = LatticeSim()
