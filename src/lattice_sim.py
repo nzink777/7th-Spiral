@@ -43,40 +43,19 @@ class LatticeSim:
         self.psi = np.dot(evolution_op, self.psi)
         return self.psi
 
-def find_exceptional_points(self, gamma_range=np.linspace(0, 2.0, 100)):
-    """
-    Sweeps gamma_0 to locate Exceptional Points (EPs).
-    EPs occur where eigenvalues coalesce.
-    """
-    eigenvalue_history = []
-    
-    for g in gamma_range:
-        # Rebuild Hamiltonian with varying gamma0
-        self.build_hamiltonian(T0=1.0, gamma0=g, localization_xi=0.1)
-        eigenvalues = np.linalg.eigvals(self.H)
-        eigenvalue_history.append(eigenvalues)
-    
-    # Analyze coalescence
-    history = np.array(eigenvalue_history)
-    return gamma_range, history
+    def find_exceptional_points(self, gamma_range=np.linspace(0, 2.0, 100)):
+        """
+        Sweeps gamma_0 to locate Exceptional Points (EPs).
+        EPs occur where eigenvalues coalesce.
+        """
+        eigenvalue_history = []
+        for g in gamma_range:
+            self.build_hamiltonian(T0=1.0, gamma0=g, localization_xi=0.1)
+            eigenvalues = np.linalg.eigvals(self.H)
+            eigenvalue_history.append(eigenvalues)
+        
+        return gamma_range, np.array(eigenvalue_history)
 
-# Integration: Plotting the spectrum
-# We look for the "branching" or "merging" points in the complex plane.
-
-
-# Verification
-if __name__ == "__main__":
-    sim = LatticeSim()
-    sim.build_hamiltonian()
-    modes = sim.solve_modes()
-    
-    # Identify the highest gain mode (Imaginary part)
-    max_gain_idx = np.argmax(modes.imag)
-    print(f"Primary Resonance Mode (Real): {modes[max_gain_idx].real:.4f}")
-    print(f"Energy Extraction Potential (Imag): {modes[max_gain_idx].imag:.4f}")
-    print(f"Non-Hermitian check (Sum abs diff): {np.sum(np.abs(sim.H - sim.H.conj().T)):.4f}")
-    
-#
     def calibrate_ep(self):
         """
         Sweeps gamma0 to find the Exceptional Point and writes to constants.yaml.
@@ -105,3 +84,14 @@ if __name__ == "__main__":
             yaml.dump({"Axiomatic_Constant_Gamma0": float(optimal_gamma)}, f)
         
         print(f"Locked Gamma0 at: {optimal_gamma}")
+
+# Verification
+if __name__ == "__main__":
+    sim = LatticeSim()
+    sim.build_hamiltonian()
+    modes = sim.solve_modes()
+    
+    print(f"Primary Resonance Mode (Real): {modes[np.argmax(modes.imag)].real:.4f}")
+    print(f"Energy Extraction Potential (Imag): {modes[np.argmax(modes.imag)].imag:.4f}")
+    print(f"Non-Hermitian check (Sum abs diff): {np.sum(np.abs(sim.H - sim.H.conj().T)):.4f}")
+        
