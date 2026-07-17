@@ -6,6 +6,9 @@ on:
       - 'src/lattice_sim.py'
       - '.github/workflows/calibrate.yml'
 
+permissions:
+  contents: write  # This is the critical missing directive
+
 jobs:
   calibrate:
     runs-on: ubuntu-latest
@@ -26,8 +29,8 @@ jobs:
           
       - name: Commit Axiomatic Constant
         run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'action@github.com'
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add constants.yaml
           git commit -m "chore: Update Axiomatic Constant Gamma0" || echo "No changes to commit"
           git push
