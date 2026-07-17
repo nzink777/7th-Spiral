@@ -1,4 +1,4 @@
-docs/latex/register_1.tex       
+# docs/latex/register_1.tex       
 # The Master Blueprint
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
@@ -25,7 +25,8 @@ The 64-sector state space is defined by the Hilbert space $\mathcal{H}_{64}$. Th
 \end{equation}
 
 \section{Hamiltonian Formulation}
-% We will insert the Hamiltonian math here once we verify the coupling matrix.
+% Hamiltonian math 
+% verify the coupling matrix.
 \section{Geometric Foundation: Topological Lattice Mapping}
 
 The resonator array is defined on a manifold $\lattice$ that requires a specific radial and angular discretization to ensure optimal flux coupling. We utilize a 64-sector state space and a 288-anchor pinning buffer.
@@ -50,6 +51,24 @@ The 288-anchor buffer $\anchor{m}$, where $m \in \{1, \dots, 288\}$, serves as t
     \end{equation}
 \end{itemize}
 This configuration ensures that the local metric $\metric$ remains stabilized against stochastic fluctuation.
+\section{Hamiltonian Formulation: Asymmetric Coupling}
+
+The dynamics of the 64-sector lattice are governed by the non-Hermitian Hamiltonian:
+\begin{equation}
+    \hamil{lattice} = \sum_{n=1}^{64} \epsilon_n a_n^\dagger a_n + \sum_{n \neq m} J_{nm} a_n^\dagger a_m
+\end{equation}
+
+The coupling matrix $J_{nm}$ encodes the non-reciprocal flow of the energy flux, essential for work extraction:
+\begin{equation}
+    J_{nm} = T_{nm} + i\gamma_{nm}
+\end{equation}
+
+\subsection{Coupling Components}
+\begin{itemize}
+    \item \textbf{Reciprocal Hopping:} $T_{nm} = T_0 \exp\left( -\frac{|r_n - r_m|}{\xi} \right)$, defining the flux distribution across the 64-sector geometry.
+    \item \textbf{Non-Reciprocal Bias:} $\gamma_{nm} = \gamma_0 \left( \delta_{n, m+1} - \delta_{n, m-1} \right)$, establishing the chiral current required to break time-reversal symmetry and drive the system out of thermal equilibrium.
+\end{itemize}
+This asymmetry forces the lattice into a preferred state-space rotation, effectively pumping vacuum fluctuations into the coherent photonic output.
 
 \end{document}
 
